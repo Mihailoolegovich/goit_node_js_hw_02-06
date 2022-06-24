@@ -6,9 +6,7 @@ const { contactsApi: ctrl } = require("../../controllers");
 const router = express.Router();
 
 router.get("/", auth, ctrlWrapper(ctrl.getAll));
-
 router.get("/:contactId", auth, ctrlWrapper(ctrl.getById));
-
 router.post("/", auth, validation(joiSchemaContact), ctrlWrapper(ctrl.add));
 
 router.put(
