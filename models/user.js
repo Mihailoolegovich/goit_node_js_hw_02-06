@@ -22,9 +22,8 @@ const userSchema = Schema(
       type: String,
       default: null,
     },
-    owner: {
-      type: Schema.Types.ObjectId,
-      ref: "user",
+    avatarURL: {
+      type: String,
       required: true,
     },
   },
@@ -38,7 +37,6 @@ const joiSchemaUser = Joi.object({
 
 const joiSchemaSubscription = Joi.object({
   subscription: Joi.string().valid("starter", "pro", "business").required(),
-  // ['starter', 'pro', 'business']
 });
 
 const User = model("user", userSchema);
