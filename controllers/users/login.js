@@ -1,6 +1,7 @@
 const { User } = require("../../models");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const { madeNewError } = require("../../middlewares");
 require("dotenv").config();
 
 const { SECRET_KEY } = process.env;
@@ -13,10 +14,11 @@ const login = async (req, res) => {
     ? bcrypt.compareSync(password, findUser.password)
     : false;
 
-  if (!findUser || !comparePass) {
-    const error = new Error("Email or password is wrong");
-    error.status = 401;
-    throw error;
+  if (!findUser || !findUser.verify || !comparePass) {
+    madeNewError({
+      message: "Email is wrong or not verify, or password is wrong",
+      status: 401,
+    });
   }
 
   const payload = { id: findUser._id };
