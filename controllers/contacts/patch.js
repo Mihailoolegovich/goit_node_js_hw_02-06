@@ -1,4 +1,5 @@
 const { Contact } = require("../../models");
+const { madeNewError } = require("../../middlewares");
 
 const updateStatusContact = async (req, res) => {
   const { contactId } = req.params;
@@ -11,9 +12,10 @@ const updateStatusContact = async (req, res) => {
   );
 
   if (!contact) {
-    const error = new Error("Not found");
-    error.status = 404;
-    throw error;
+    madeNewError({
+      message: "Not found",
+      status: 404,
+    });
   }
 
   res.json({ contact });
